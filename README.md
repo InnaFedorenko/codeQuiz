@@ -10,7 +10,7 @@
 
 ### Screenshot
 
-![Screenshot](innafedorenko.github.io_portfolio_.png)
+![Screenshot](innafedorenko.github.io_codeQuiz_index.html.png)
 
 - - - 
 ## Task Description
@@ -35,7 +35,7 @@ THEN time is subtracted from the clock - 👌
 WHEN all questions are answered or the timer reaches 
 THEN the game is over -  👌
 WHEN the game is over
-THEN I can save my initials and my score
+THEN I can save my initials and my score-  👌
 ```
 
 ## Mock-Up
