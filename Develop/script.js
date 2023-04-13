@@ -1,10 +1,29 @@
 //Define global variables
 let scoreEl = document.querySelector('#score');
 let score = 0;
+let questionsAmount = 0;
+const questionsList=[
+    {
+        question: 'What is the capital of France?',
+        answers: ['Paris', 'Berlin', 'Madrid'],
+        correctAnswer:'Paris'
+
+    },
+    {
+        question: 'What is the capital of Germany?',
+        answers: ['Paris', 'Berlin', 'Madrid'],
+        correctAnswer:'Berlin'
+    },
+    {
+        question: 'What is the capital of Italy?',
+        answers: ['Roma', 'Berlin', 'Madrid'],
+        correctAnswer:'Roma'
+    }
+];
 
 var timerEl = document.querySelector('#time-seconds');
 var cardContainer = document.querySelector('#card-container');
-var time = 10;
+var time = 100;
 var timerInterval = 0;
 
 var startBtn = document.querySelector('#start');
@@ -16,9 +35,6 @@ function init(){
     return;
 
 }
-// scoreEl.textContent= `score: ${score}`;
-// console.log("Test connected script.js")
-
 //Start timer function
 function startTimer () {
 
@@ -32,13 +48,15 @@ function startTimer () {
         } else{
             // If timer reaches 0, clear the interval and navigate to the "Game Over" page
             clearInterval(timerInterval);
-            window.location.href = "score.html";
+            window.location.href = "result.html";
+            var finalScoreEl=document.querySelector('#final-score-value');
+            finalScoreEl.textContent = score;
         }
         
         }, 1000 
     )
     console.log(time);
-    return;
+    return ;
  }
 //Stop Timer
 function stopTimer(){
@@ -54,21 +72,24 @@ function hideSection(section){
 function createQuestion(){
     // First, create a container element to hold the question and answers
     var container = document.createElement('div');
+    container.id = 'qa'+questionsAmount;
+    console.log('Questions id '+ container.id)
     //container.classList.add('question-container');
     cardContainer.appendChild(container);
 
     // Next, create the question text element
     var question = document.createElement('h3');
-    question.textContent = 'What is the capital of France?';
+    question.textContent = questionsList[questionsAmount].question; //'What is the capital of France?';
     container.appendChild(question);
 
 
     // Create an array to hold the possible answers
-    var answers = ['Paris', 'Berlin', 'Madrid'];
+    var answers =questionsList[questionsAmount].answers; // ['Paris', 'Berlin', 'Madrid'];
     console.log("answers - "+ answers);
 
     // Loop through the answers array and create a button element for each answer
     var buttonContainer = document.createElement('div');
+    buttonContainer.id=`question ${questionsAmount}`; 
     buttonContainer.classList.add('button-container');
     container.appendChild(buttonContainer);
     //add buttons with answers
@@ -86,6 +107,8 @@ function createQuestion(){
     buttonContainer.appendChild(span);
     //span.display = none;
     return document.querySelectorAll('button');
+    
+
 }
 function runtQuiz(){
     //Hide Quiz description
@@ -97,10 +120,11 @@ function runtQuiz(){
     var scoreMessage = '';
     var messageEL = document.querySelector('#score-message');
     startBtn.addEventListener("click", startTimer());
+    console.log('Question Amount '+questionsAmount);
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function() {
             console.log('Selected button is '+ buttons[i].textContent);
-            if (buttons[i].textContent ==='Paris') {
+            if (buttons[i].textContent === questionsList[0].correctAnswer) {
                 scoreMessage = 'Correct!';
                 console.log('Paris is '+ scoreMessage);                    
                 score+=1;
@@ -123,8 +147,8 @@ function runtQuiz(){
                 document.querySelector('#score-message').textContent=''
             }, 3000);
             console.log('Next  Question');
-         //add time validation
-         console.log('Time is '+time);
+            //add navigation to the next question
+            //TODO carusel
             return ;
         });
     }

@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Score</title>
+    <title>Save Result</title>
     <link rel="stylesheet" href="Develop/reset.css" /> 
     <link rel="stylesheet" href="Develop/style.css" /> 
 </head>
 <body>
     <body>
-        <div class="wrapper">
-          <header>
-            <h1>Score </h1>
-          </header>
-          <div class = score>
-            <h2>Score list</h2>
+        <div class="final-score">
+            <h1>All Done!</h1>
+            <h2>Your final score is <span id="final-score-value"></span></h2>
+            <form>
+              <label for="initials">Enter Initials:</label>
+              <input type="text" id="initials" name="initials" placeholder="Your initials...">
+              <button type="submit">Submit</button>
+            </form>
           </div>
-          <div class="buttons">
-            <button id="back" class="btn">Go Back</button>
-            <button id="clear" class="btn">Clear Highscore</button>           
-          </div>
-        </div>
         <script src="Develop/script.js"></script>
       </body>  
 </body>

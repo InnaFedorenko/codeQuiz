@@ -142,6 +142,54 @@ header {
   resize: none;
   overflow: hidden;
 } */
+.final-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.final-score h2 {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+}
+
+.final-score h2 span {
+  margin-left: 0.5rem;
+  font-size: 2rem;
+}
+
+.final-score form {
+  margin-top: 1.5rem;
+}
+
+.final-score label {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.final-score input[type="text"] {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  margin-right: 0.5rem;
+}
+
+.final-score button[type="submit"] {
+  background-color: aqua;
+  /* background-color: #007bff; */
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* .final-score button[type="submit"]:hover {
+  background-color: #0062cc;
+} */
 
 @media (max-width: 690px) {
   .btn {
