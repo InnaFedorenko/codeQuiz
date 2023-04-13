@@ -69,7 +69,7 @@ function hideSection(section){
     return;
 }
 
-function createQuestion(){
+function createQuestion(questionNumber){
     // First, create a container element to hold the question and answers
     var container = document.createElement('div');
     container.id = 'qa'+questionsAmount;
@@ -79,17 +79,17 @@ function createQuestion(){
 
     // Next, create the question text element
     var question = document.createElement('h3');
-    question.textContent = questionsList[questionsAmount].question; //'What is the capital of France?';
+    question.textContent = questionsList[questionNumber].question; //'What is the capital of France?';
     container.appendChild(question);
 
 
     // Create an array to hold the possible answers
-    var answers =questionsList[questionsAmount].answers; // ['Paris', 'Berlin', 'Madrid'];
+    var answers =questionsList[questionNumber].answers; // ['Paris', 'Berlin', 'Madrid'];
     console.log("answers - "+ answers);
 
     // Loop through the answers array and create a button element for each answer
     var buttonContainer = document.createElement('div');
-    buttonContainer.id=`question ${questionsAmount}`; 
+    buttonContainer.id=`question ${questionNumber}`; 
     buttonContainer.classList.add('button-container');
     container.appendChild(buttonContainer);
     //add buttons with answers
@@ -116,7 +116,11 @@ function runtQuiz(){
     // Hide the element by setting its CSS display property to "none"
     hideSection(cardStart);
     //Add event listeners for buttons
-    var buttons = createQuestion();
+  ///////////////////////////////////////////////////////////////////////////////////
+  //TODO - add questions for questions list
+
+  //////////////////////////////////////////////////////////////////////////////////  
+    var buttons = createQuestion(questionsAmount);
     var scoreMessage = '';
     var messageEL = document.querySelector('#score-message');
     startBtn.addEventListener("click", startTimer());
@@ -124,7 +128,7 @@ function runtQuiz(){
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function() {
             console.log('Selected button is '+ buttons[i].textContent);
-            if (buttons[i].textContent === questionsList[0].correctAnswer) {
+            if (buttons[i].textContent === questionsList[questionsAmount].correctAnswer) {
                 scoreMessage = 'Correct!';
                 console.log('Paris is '+ scoreMessage);                    
                 score+=1;
