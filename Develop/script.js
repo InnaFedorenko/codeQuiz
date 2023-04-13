@@ -1,75 +1,173 @@
 //Define global variables
-var generateBtn = document.querySelector("#generate");
+// let scoreEl = document.querySelector('#score');
+let score = 0;
 
-//Define password criteria
-function getLenght () {
-  let lenght = parseInt(prompt ("Please enter password length of at least 8 characters and no more than 128 characters",12));
-  //return  value only if lenght is integer number in the range from 8 to 128
-  if (Number.isInteger(lenght) && 8<=lenght && lenght<=128) return lenght; 
-}
+var timerEl = document.querySelector('#time-seconds');
+var cardContainer = document.querySelector('#card-container');
+var time = 999;
+var timerInterval = 0;
 
-//Define allowed symbols
-function getAllowedSymbols(){
-  // Define allowed symbols sets
-  const charactersTypes = ['numeric', 'lowercase', 'uppercase', ' special symbols']
-  const charMap = {
-    [charactersTypes[0]]: '0123456789',                        // numeric
-    [charactersTypes[1]]: 'abcdefghijklmnopqrstuvwxyz',        // lowercase
-    [charactersTypes[2]]: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',        // uppercase
-    [charactersTypes[3]]: '!@#$%^&*()_+~`|}{[]\\:;?><,./-='    // special symbols
-  };
-  //Denine variables
-  let result = '';
-  let characters = '';
-  //Get user choice
-  for (var i=0; i<4; i++) {
-    result = confirm('do you want include '+ charactersTypes[i] +' ?') 
-    if (result) characters += charMap[[charactersTypes[i]]]; 
-  }
-  //console.log (characters)
-  return characters;
-
-}
-
-//Generate Password
-function generatePassword(length, allowedSymbols) {
-  let result = '';
-  const symbols = allowedSymbols.split('');
-  const symbolsLength = symbols.length;
-
-  for (let i = 0; i < length; i++) {
-    result += symbols[Math.floor(Math.random() * symbolsLength)];
-  }
-  return result;
-}
-
-// Write password to the #password input
-function writePassword() {
-  // Define function parameters
-  var passwordText = document.querySelector("#password");
-  passwordText.style.color = "fieldtext";
-  passwordText.value  = "Your Secure Password";
-
-  let length = getLenght ();
-
-  // Validate lenght, if it is not correct - finish funtion and display error
-  if (!length) {
-    passwordText.value = "To generate password: select <Generate Password> button again and" + "enter password length in the range from 8 to 128";
-    passwordText.style.color = "red";
+var startBtn = document.querySelector('#start');
+//Load page
+function init(){
+    console.log("init");
+    stopTimer();
+    timerEl.textContent= 'Time: 0'; 
     return;
-  }
-  let allowedSymbols = getAllowedSymbols();
-    // Validate allowed symbols, if user did not choose any - finish funtion and display error
-  if (!allowedSymbols) 
-  {
-    passwordText.value = "To generate password: select <Generate Password> button again and" + "enter password length in the range from 8 to 128 and define allowed symbols";
-    passwordText.style.color = "red";
-    return;
-  }
 
-  let password = generatePassword(length, allowedSymbols);   // generate password 
-  passwordText.value = password;                             //write password
+}
+// scoreEl.textContent= `score: ${score}`;
+// console.log("Test connected script.js")
+
+//Start timer function
+function startTimer () {
+
+    console.log ("Start Timer");
+    timerEl.textContent= "Time left: ${time}";
+    timerInterval = setInterval( 
+        function() {
+        time--; 
+        timerEl.textContent= `Time left: ${time}`; 
+        }, 1000 
+    )
+    console.log(time);
+    return;
+ }
+//Stop Timer
+function stopTimer(){
+    console.log("Stop Timer");
+    return;
+}
+//Hide section
+function hideSection(section){
+    section.style.display = 'none';
+    return;
+}
+function selectAnswer(time,score,answer) {
+    //click button to select answer
+
+    console.log("time is   "+ time);
+    console.log("score is   "+ score);
+    console.log("answer is   "+answer);
+
 }
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+
+
+
+
+function startQuiz(){
+    // startBtn.addEventListener("click", startTimer());
+    console.log("Start Quiz");
+    startTimer();
+
+    //Hide Quiz description
+    var cardStart = document.getElementById('card-start');
+    // Hide the element by setting its CSS display property to "none"
+    hideSection(cardStart);
+
+    //show first question
+    // let questionContainer=document.createElement("div");
+        //Hide start Quiz section
+        //startQuizContainer.style.display = 'none';
+
+        // First, create a container element to hold the question and answers
+        var container = document.createElement('div');
+        //container.classList.add('question-container');
+        cardContainer.appendChild(container);
+
+        // Next, create the question text element
+        var question = document.createElement('h3');
+        question.textContent = 'What is the capital of France?';
+        container.appendChild(question);
+
+
+        // // Create an array to hold the possible answers
+        var answers = ['Paris', 'Berlin', 'Madrid'];
+        console.log("answers - "+ answers);
+
+        // // Loop through the answers array and create a button element for each answer
+        var buttonContainer =document.createElement('div');
+        buttonContainer.classList.add('button-container');
+        container.appendChild(buttonContainer);
+        //add buttons with answers
+        for (let i = 0; i < answers.length; i++) {
+            var answer = answers[i];
+            var button = document.createElement('button');
+            var correctAnswer = false;
+
+            button.textContent = answer;
+            button.id = "btn"+i;
+            console.log("it is button"+button.id);
+            buttonContainer.appendChild(button);
+            //Validate answer
+            if (answer==='Paris') correctAnswer=true;
+            //add event listener
+            console.log("answer - " + answer);
+            // button.addEventListener("click", function(event) {
+            //     console.log("answer2 - " + answer);
+            //      selectAnswer(time,score,answer);
+            //   });
+
+
+            //Append buttons
+            // buttonContainer.appendChild(button);
+        }
+        button.addEventListener("click", function(event) {
+            console.log("answer2 - " + answer);
+             selectAnswer(time,score,answer);
+          });
+        // // Add the button to the container
+        // container.appendChild(button);
+        // });
+
+        // // Finally, create a span element to hold the count of correct answers
+        // const correctAnswerCount = document.createElement('span');
+        // correctAnswerCount.textContent = `0 out of ${answers.length}`;
+
+        // // Add the count element to the container
+        // container.appendChild(correctAnswerCount);
+
+        // Add the container to the page
+        // document.body.appendChild(container);
+
+    return;
+}
+
+
+init();
+
+//Start Quiz
+
+
+// Add event listener to start button
+// startBtn.addEventListener("click", startQuiz());
+startBtn.addEventListener("click",startQuiz);
+//THEN a timer starts and I am presented with a question
+
+
+
+
+
+
+
+
+//Display Next Question
+//THEN I am presented with another question
+
+
+
+
+//Show is answer correct
+//THEN time is subtracted from the clock
+
+
+
+//Game is over
+//THEN the game is over
+
+
+
+
+//Show score
+//THEN I can save my initials and my score
