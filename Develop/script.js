@@ -1,18 +1,18 @@
 //Define global variables
-// let scoreEl = document.querySelector('#score');
+let scoreEl = document.querySelector('#score');
 let score = 0;
 
 var timerEl = document.querySelector('#time-seconds');
 var cardContainer = document.querySelector('#card-container');
-var time = 999;
+var time = 300;
 var timerInterval = 0;
 
 var startBtn = document.querySelector('#start');
 //Load page
 function init(){
-    console.log("init");
     stopTimer();
     timerEl.textContent= 'Time: 0'; 
+    scoreEl.textContent = 'Score: 0';
     return;
 
 }
@@ -43,29 +43,8 @@ function hideSection(section){
     section.style.display = 'none';
     return;
 }
-function selectAnswer(time,score,answer) {
-    //click button to select answer
 
-    console.log("time is   "+ time);
-    console.log("score is   "+ score);
-    console.log("answer is   "+answer);
-
-}
-
-
-
-
-
-function startQuiz(){
-    // startBtn.addEventListener("click", startTimer());
-    console.log("Start Quiz");
-    startTimer();
-
-    //Hide Quiz description
-    var cardStart = document.getElementById('card-start');
-    // Hide the element by setting its CSS display property to "none"
-    hideSection(cardStart);
-
+function createQuestion(){
     // First, create a container element to hold the question and answers
     var container = document.createElement('div');
     //container.classList.add('question-container');
@@ -82,38 +61,65 @@ function startQuiz(){
     console.log("answers - "+ answers);
 
     // Loop through the answers array and create a button element for each answer
-    var buttonContainer =document.createElement('div');
+    var buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');
     container.appendChild(buttonContainer);
     //add buttons with answers
     for (let i = 0; i < answers.length; i++) {
-        var answer = answers[i];
-        //var correctAnswer = false;
-        //Validate answer
-
+        // var answer = answers[i];
         var button = document.createElement('button');
-        button.textContent = answer;
+        button.textContent = answers[i];
         button.id = "btn"+i;
-        console.log("it is button"+button.id);
         buttonContainer.appendChild(button);
     }
-    //Add event listeners for buttons
-    var buttons = document.querySelectorAll('button');
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', () => {
-            if (buttons[i].textContent ==='Paris') {
-                console.log('Paris');                    
-                score+=1;}
-            else {
-                time-=10;
-            }
-        });
-        }
-
-
-    return;
+    //Add span element
+    var span = document.createElement('span');
+    span.id = 'score-message';
+    span.textContent = 'Score Message- '+ score;
+    buttonContainer.appendChild(span);
+    //span.display = none;
+    return document.querySelectorAll('button');
 }
 
+function runtQuiz(){
+    // startBtn.addEventListener("click", startTimer());
+    console.log("Start Quiz");
+    startTimer();
+
+    //Hide Quiz description
+    var cardStart = document.getElementById('card-start');
+    // Hide the element by setting its CSS display property to "none"
+    hideSection(cardStart);
+    //Add event listeners for buttons
+    var buttons = createQuestion();
+    var scoreMessage = '';
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function() {
+            console.log('Selected button is '+ buttons[i].textContent);
+            if (buttons[i].textContent ==='Paris') {
+                scoreMessage = 'Correct!';
+                console.log('Paris is '+ scoreMessage);                    
+                score+=1;
+                console.log ('Score is '+score);
+            }
+            else {
+                time-=10;
+                scoreMessage = 'Wrong!';
+                console.log (buttons[i].textContent + ' is '+ scoreMessage);  
+            }
+            console.log('scoreMessage - '+ scoreMessage);
+            var messageEL = document.querySelector('#score-message');
+            messageEL.textContent = scoreMessage;
+            console.log ('Score2 is '+score);
+            scoreEl.textContent='Score: '+ score;
+            return ;
+        });
+        //add timeout
+        //add time validation
+    }
+    return;
+}
+//scoreEl.textContent 
 
 init();
 
@@ -122,7 +128,7 @@ init();
 
 // Add event listener to start button
 // startBtn.addEventListener("click", startQuiz());
-startBtn.addEventListener("click",startQuiz);
+startBtn.addEventListener("click",runtQuiz);
 //THEN a timer starts and I am presented with a question
 
 
