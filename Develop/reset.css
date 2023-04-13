@@ -43,7 +43,7 @@ code {
 ul {
   list-style: none;
 }
-  /* style for debugging */
+  /* style for debugging
 body,
 nav,
 header,
@@ -62,5 +62,5 @@ ul,
 li,
 footer, article {
   border: 3px solid black; 
-  /* background-color: blue; */
-} 
+  background-color: blue;
+}  */

@@ -36,9 +36,8 @@ function init(){
 }
 function gameOver(){
     clearInterval(timerInterval);
+    localStorage.setItem('finalScore', score);
     window.location.href = "result.html";
-    var finalScoreEl=document.querySelector('#final-score-value');
-    finalScoreEl.textContent = score;
     return; 
 }
 //Start timer function
@@ -50,12 +49,6 @@ function startTimer () {
             timerEl.textContent= `Time left: ${time}`; 
         } else{
             gameOver();
-            // If timer reaches 0, clear the interval and navigate to the "Game Over" page
-            // clearInterval(timerInterval);
-            // window.location.href = "result.html";
-            // var finalScoreEl=document.querySelector('#final-score-value');
-            // finalScoreEl.textContent = score;
-
         }
         
         }, 1000 
@@ -141,7 +134,7 @@ function runQuiz(){
         buttons[i].addEventListener('click', function() {
             if (buttons[i].textContent === questionsList[questionNumber].correctAnswer) {
                 scoreMessage = 'Correct!';                   
-                score+=1;
+                score++;
             }
             else {
                 time-=10;
@@ -161,43 +154,14 @@ function runQuiz(){
             }, 3000);
         });
     }
-    return;
+    console.log ('your final score is '+score);
+    //store final score in local storage variable
+    //localStorage.setItem('finalScore', score);
+    return ;
 }
-//scoreEl.textContent 
-
+//**Main functionality Start - Quiz page */ 
+//set defaults
 init();
-
 //Start Quiz
-
-// Add event listener to start button
 startBtn.addEventListener("click",nextQuestion);
-
-
-//THEN a timer starts and I am presented with a question
-
-
-
-
-
-
-
-
-//Display Next Question
-//THEN I am presented with another question
-
-
-
-
-//Show is answer correct
-//THEN time is subtracted from the clock
-
-
-
-//Game is over
-//THEN the game is over
-
-
-
-
-//Show score
-//THEN I can save my initials and my score
+//**Main functionality End - Quiz page */ 

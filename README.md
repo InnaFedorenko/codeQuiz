@@ -3,9 +3,9 @@
 
 * Implemented by Inna Fedorenko 
 * Date: April 2023
-* [Git Repository](https://github.com/InnaFedorenko/portfolio);
+* [Git Repository](https://github.com/InnaFedorenko/codeQuiz);
 
-* [Portfolio site](https://innafedorenko.github.io/portfolio/);
+* [Quiz site](https://innafedorenko.github.io/codeQuiz/);
 
 
 ### Screenshot
