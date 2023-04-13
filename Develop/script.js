@@ -4,7 +4,7 @@ let score = 0;
 
 var timerEl = document.querySelector('#time-seconds');
 var cardContainer = document.querySelector('#card-container');
-var time = 300;
+var time = 10;
 var timerInterval = 0;
 
 var startBtn = document.querySelector('#start');
@@ -23,11 +23,18 @@ function init(){
 function startTimer () {
 
     console.log ("Start Timer");
-    timerEl.textContent= "Time left: ${time}";
+   // timerEl.textContent= 'Time left: ${time}';
     timerInterval = setInterval( 
         function() {
-        time--; 
-        timerEl.textContent= `Time left: ${time}`; 
+        if (time > 0) {
+            time--; 
+            timerEl.textContent= `Time left: ${time}`; 
+        } else{
+            // If timer reaches 0, clear the interval and navigate to the "Game Over" page
+            clearInterval(timerInterval);
+            window.location.href = "score.html";
+        }
+        
         }, 1000 
     )
     console.log(time);
@@ -80,12 +87,7 @@ function createQuestion(){
     //span.display = none;
     return document.querySelectorAll('button');
 }
-
 function runtQuiz(){
-    // startBtn.addEventListener("click", startTimer());
-    console.log("Start Quiz");
-    startTimer();
-
     //Hide Quiz description
     var cardStart = document.getElementById('card-start');
     // Hide the element by setting its CSS display property to "none"
@@ -93,6 +95,8 @@ function runtQuiz(){
     //Add event listeners for buttons
     var buttons = createQuestion();
     var scoreMessage = '';
+    var messageEL = document.querySelector('#score-message');
+    startBtn.addEventListener("click", startTimer());
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function() {
             console.log('Selected button is '+ buttons[i].textContent);
@@ -108,14 +112,21 @@ function runtQuiz(){
                 console.log (buttons[i].textContent + ' is '+ scoreMessage);  
             }
             console.log('scoreMessage - '+ scoreMessage);
-            var messageEL = document.querySelector('#score-message');
+            // var messageEL = document.querySelector('#score-message');
             messageEL.textContent = scoreMessage;
             console.log ('Score2 is '+score);
             scoreEl.textContent='Score: '+ score;
+            //add timeout
+            setTimeout(function() {
+                // Code to be executed after 3 seconds
+                console.log("3 seconds have passed!");
+                document.querySelector('#score-message').textContent=''
+            }, 3000);
+            console.log('Next  Question');
+         //add time validation
+         console.log('Time is '+time);
             return ;
         });
-        //add timeout
-        //add time validation
     }
     return;
 }
@@ -125,10 +136,10 @@ init();
 
 //Start Quiz
 
-
 // Add event listener to start button
-// startBtn.addEventListener("click", startQuiz());
 startBtn.addEventListener("click",runtQuiz);
+
+
 //THEN a timer starts and I am presented with a question
 
 
